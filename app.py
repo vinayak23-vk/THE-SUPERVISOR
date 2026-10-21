@@ -185,7 +185,12 @@ else:
          f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable"),
     ]
 
-score=round(100*passed/len(checks))
+if not checks:
+    st.error("No setup checks were generated. Check the setup selection code.")
+    st.stop()
+
+passed = sum(bool(c[1]) for c in checks)
+score = round(100 * passed / len(checks))
 st.subheader(f"{symbol} — {setup}")
 c1,c2,c3,c4=st.columns(4)
 c1.metric("Latest close",f"₹{close:,.2f}")
