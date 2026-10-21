@@ -142,30 +142,49 @@ resistance_approach=bool(resistance>0 and close<resistance and close>=resistance
 breakout=bool(resistance>0 and close>resistance and float(prev["Close"])<=resistance and vol_ok)
 retest=bool(resistance>0 and last["Low"]<=resistance*(1+tol) and close>resistance and bull_candle)
 
-if setup=="Support bounce":
-    checks=[
-        ("Price near support",near_support or support_rejection,f"Close ₹{close:.2f}; support ₹{support:.2f}"),
-        ("Support held / rejection",support_rejection,f"Low ₹{last['Low']:.2f}; close ₹{close:.2f}"),
-        ("RSI in configured range",rsi_ok,f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
-        ("Volume expansion",vol_ok,f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
-("Close above EMA100", above_ema50, f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable"),]
-elif setup=="Pre-breakout":
-    checks= [
-        ("Price approaching resistance",resistance_approach,f"Close ₹{close:.2f}; resistance ₹{resistance:.2f}"),
-        ("No confirmed breakout yet",bool(resistance>0 and close<=resistance),f"Close ₹{close:.2f} vs resistance ₹{resistance:.2f}"),
-        ("Bullish candle",bull_candle,f"Open ₹{last['Open']:.2f}; close ₹{close:.2f}"),
-        ("RSI in configured range",rsi_ok,f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
-        ("Volume expansion",vol_ok,f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable")
-    ]
-else:
-    checks=[
-        ("Breakout level reclaimed",retest,f"Low ₹{last['Low']:.2f}; close ₹{close:.2f}; resistance ₹{resistance:.2f}"),
-        ("Bullish candle",bull_candle,f"Open ₹{last['Open']:.2f}; close ₹{close:.2f}"),
-        ("RSI in configured range",rsi_ok,f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
-        ("Volume expansion",vol_ok,f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
-        ("Close above EMA100", above_ema50, f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable")
 
-passed=sum(bool(c[1]) for c in checks)
+if setup == "Support bounce":
+    checks = [
+        ("Price near support", near_support or support_rejection,
+         f"Close ₹{close:.2f}; support ₹{support:.2f}"),
+        ("Support held / rejection", support_rejection,
+         f"Low ₹{last['Low']:.2f}; close ₹{close:.2f}"),
+        ("RSI in configured range", rsi_ok,
+         f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
+        ("Volume expansion", vol_ok,
+         f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
+        ("Close above EMA100", above_ema100,
+         f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable"),
+    ]
+
+elif setup == "Pre-breakout":
+    checks = [
+        ("Price approaching resistance", resistance_approach,
+         f"Close ₹{close:.2f}; resistance ₹{resistance:.2f}"),
+        ("No confirmed breakout yet", bool(resistance > 0 and close <= resistance),
+         f"Close ₹{close:.2f} vs resistance ₹{resistance:.2f}"),
+        ("Bullish candle", bull_candle,
+         f"Open ₹{last['Open']:.2f}; close ₹{close:.2f}"),
+        ("RSI in configured range", rsi_ok,
+         f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
+        ("Volume expansion", vol_ok,
+         f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
+    ]
+
+else:
+    checks = [
+        ("Breakout level reclaimed", retest,
+         f"Low ₹{last['Low']:.2f}; close ₹{close:.2f}; resistance ₹{resistance:.2f}"),
+        ("Bullish candle", bull_candle,
+         f"Open ₹{last['Open']:.2f}; close ₹{close:.2f}"),
+        ("RSI in configured range", rsi_ok,
+         f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
+        ("Volume expansion", vol_ok,
+         f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
+        ("Close above EMA100", above_ema100,
+         f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable"),
+    ]
+
 score=round(100*passed/len(checks))
 st.subheader(f"{symbol} — {setup}")
 c1,c2,c3,c4=st.columns(4)
