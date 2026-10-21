@@ -1,23 +1,20 @@
-THE SUPERVISOR — IPAD/CLOUD STARTER
-===================================
+THE SUPERVISOR V0.2 — iPad-friendly upgrade
 
-This starter is designed to be hosted online so you can open it in Safari on your iPad.
-It does not need to run locally on the iPad.
+WHAT'S NEW
+- Upload actual OHLCV candle CSVs.
+- MA10/21/50, EMA100/200, RSI14 + RSI average, MACD, Stoch RSI, volume ratio, ATR14.
+- Configurable support bounce, pre-breakout and breakout-retest checklists.
+- Basic ATR-based illustrative risk sizing.
+- Download analysed candle data.
 
-FILES
------
-app.py          The single-file Streamlit dashboard
-requirements.txt  Dependencies
+LIMITATIONS
+- No live feed, no broker connection, no background alerts, no order execution.
+- Synthetic demo prices are fake and only demonstrate the interface.
+- Signals are simple rule checks, not a validated predictive model.
+- Use at least 200-300 candles for useful EMA200 context.
 
-IMPORTANT LIMITS
-----------------
-- Demo data is synthetic, not real market data.
-- CSV upload works for testing with your own historical OHLCV candles.
-- No live Angel One feed, alerts, or order execution is included.
-- Keep broker credentials and API secrets private.
-
-NEXT STEP
----------
-Upload app.py and requirements.txt to a GitHub repository, then deploy it with
-Streamlit Community Cloud at https://share.streamlit.io.
-The app should use app.py as its main file.
+DEPLOY
+1. Replace the existing app.py in your GitHub repository with this app.py.
+2. Keep requirements.txt in the repo (replace it with the supplied one).
+3. Streamlit Cloud should redeploy automatically.
+4. Upload CSV from the sidebar to analyse real historical candles.
