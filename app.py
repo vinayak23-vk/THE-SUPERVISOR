@@ -149,7 +149,7 @@ if setup=="Support bounce":
         ("RSI in configured range",rsi_ok,f"RSI {last['RSI14']:.1f}" if pd.notna(last["RSI14"]) else "RSI unavailable"),
         ("Volume expansion",vol_ok,f"{last['VolumeRatio']:.2f}× 20-bar average" if pd.notna(last["VolumeRatio"]) else "Volume average unavailable"),
 ("Close above EMA100", above_ema50, f"EMA100 ₹{last['EMA100']:.2f}" if pd.notna(last["EMA100"]) else "EMA100 unavailable"),
-elif setup=="Pre-breakout":]
+elif setup=="Pre-breakout":
     checks=[
         ("Price approaching resistance",resistance_approach,f"Close ₹{close:.2f}; resistance ₹{resistance:.2f}"),
         ("No confirmed breakout yet",bool(resistance>0 and close<=resistance),f"Close ₹{close:.2f} vs resistance ₹{resistance:.2f}"),
