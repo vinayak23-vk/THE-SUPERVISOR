@@ -1,20 +1,15 @@
-THE SUPERVISOR V0.2 — iPad-friendly upgrade
+THE SUPERVISOR V0.3 — INSTALL NOTES
 
-WHAT'S NEW
-- Upload actual OHLCV candle CSVs.
-- MA10/21/50, EMA100/200, RSI14 + RSI average, MACD, Stoch RSI, volume ratio, ATR14.
-- Configurable support bounce, pre-breakout and breakout-retest checklists.
-- Basic ATR-based illustrative risk sizing.
-- Download analysed candle data.
+Files:
+- app.py
+- requirements.txt
 
-LIMITATIONS
-- No live feed, no broker connection, no background alerts, no order execution.
-- Synthetic demo prices are fake and only demonstrate the interface.
-- Signals are simple rule checks, not a validated predictive model.
-- Use at least 200-300 candles for useful EMA200 context.
+Before replacing anything:
+1. Keep a copy of your current working root app.py.
+2. Replace the ROOT app.py with this app.py.
+3. Ensure the requirements file used by Streamlit includes yfinance. Your earlier logs showed it used .devcontainer/requirements.txt, so that file may also need yfinance added if Streamlit continues to install from it.
+4. Do not use .devcontainer/test_data.py as the app entry point. It is only a test script.
+5. Commit changes and wait for deployment.
 
-DEPLOY
-1. Replace the existing app.py in your GitHub repository with this app.py.
-2. Keep requirements.txt in the repo (replace it with the supplied one).
-3. Streamlit Cloud should redeploy automatically.
-4. Upload CSV from the sidebar to analyse real historical candles.
+This app supports Yahoo Finance, CSV upload and synthetic demo data; 1D, 1H, 4H (aggregated from 1H), 15m and 5m.
+Yahoo Finance is unofficial and may be delayed, rate-limited or incomplete. No live feed guarantee and no trade execution.
